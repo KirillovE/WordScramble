@@ -29,6 +29,7 @@ struct ContentView: View {
                 }
             }
             .navigationBarTitle(rootWord)
+            .navigationBarItems(leading: Button("New game", action: startGame))
             .onAppear(perform: startGame)
             .alert(isPresented: $showingAlert) {
                 Alert(
@@ -74,6 +75,7 @@ struct ContentView: View {
         
         let allWords = startWords.components(separatedBy: "\n")
         rootWord = allWords.randomElement() ?? "silkworm"
+        usedWords.removeAll()
     }
     
     private func isOriginal(word: String) -> Bool {
