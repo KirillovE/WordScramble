@@ -94,6 +94,11 @@ struct ContentView: View {
     }
     
     private func isReal(word: String) -> Bool {
+        guard
+            word.count > 3,
+            word != rootWord
+        else { return false }
+        
         let checker = UITextChecker()
         let range = NSRange(location: 0, length: word.utf16.count)
         let misspelledRange = checker.rangeOfMisspelledWord(
