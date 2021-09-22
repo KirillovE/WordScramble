@@ -11,6 +11,7 @@ struct ContentView: View {
     @State private var usedWords = [String]()
     @State private var rootWord = ""
     @State private var newWord = ""
+    @State private var currentScore = 0
     
     @State private var alertTitle = ""
     @State private var alertMessage = ""
@@ -27,6 +28,7 @@ struct ContentView: View {
                     Image(systemName: "\($0.count).circle")
                     Text($0)
                 }
+                Text("Your score is: \(currentScore)")
             }
             .navigationBarTitle(rootWord)
             .navigationBarItems(leading: Button("New game", action: startGame))
@@ -64,6 +66,7 @@ struct ContentView: View {
         }
         
         usedWords.insert(answer, at: 0)
+        currentScore += answer.count
         newWord = ""
     }
     
@@ -76,6 +79,7 @@ struct ContentView: View {
         let allWords = startWords.components(separatedBy: "\n")
         rootWord = allWords.randomElement() ?? "silkworm"
         usedWords.removeAll()
+        currentScore = 0
     }
     
     private func isOriginal(word: String) -> Bool {
@@ -97,7 +101,7 @@ struct ContentView: View {
     
     private func isReal(word: String) -> Bool {
         guard
-            word.count > 3,
+            word.count > 2,
             word != rootWord
         else { return false }
         
